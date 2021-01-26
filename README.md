@@ -7,3 +7,6 @@
 
 ## 정의
 - [Apache Lucene](https://lucene.apache.org/) 기반의 **매우 간단**하게 구현된 검색 API 서버
+
+# 참고
+- [Lucene 8.7.0 core API](https://lucene.apache.org/core/8_7_0/core/overview-summary.html#overview.description)

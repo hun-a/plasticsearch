@@ -164,4 +164,7 @@ gradle-app.setting
 ### Gradle Patch ###
 **/build/
 
+### custom ###
+indices
+
 # End of https://www.toptal.com/developers/gitignore/api/gradle,java,intellij+all,macos
