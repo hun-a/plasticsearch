@@ -59,6 +59,7 @@ public class Searcher {
         SearchResultDto resultDto = SearchResultDto.builder()
                 .total(topDocs.totalHits.value)
                 .build();
+
         for (ScoreDoc sDoc: topDocs.scoreDocs) {
             Document doc = indexSearcher.doc(sDoc.doc);
             Map<String, Object> map = new HashMap<>();
@@ -67,12 +68,14 @@ public class Searcher {
                     .score(sDoc.score)
                     .source(map)
                     .build();
+
             for (IndexableField f: doc.getFields()) {
                 map.put(f.name(), doc.get(f.name()));
                 if ("id".equals(f.name())) {
                     hit.setId(doc.get(f.name()));
                 }
             }
+
             resultDto.getHits().add(hit);
             resultDto.setMaxScore(resultDto.getHits().get(0).getScore());
         }

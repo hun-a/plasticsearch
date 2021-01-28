@@ -9,6 +9,7 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.Term;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -39,21 +40,32 @@ public class Indexer {
         return new IndexWriter(DirectoryUtil.getDirectory(indexName), config);
     }
 
-    // create docs
-    public String createDocument(String indexName, String id, String body) throws Exception {
-        Map<String, Object> json = GSON.fromJson(body, Map.class);
-        Document doc = new Document();
-        doc.add(TypeHandler.mapField("id", id));
-        json.entrySet().forEach(e -> doc.add(TypeHandler.mapField(e.getKey(), e.getValue())));
-
+    /**
+     * Update document string.
+     *
+     * @param indexName  the index name
+     * @param documentId the document id
+     * @param body       the body
+     * @return the string
+     */
+    public String generateDocument(String indexName, String documentId, String body) throws Exception {
+        Document doc = this.createDocument(documentId, body);
+        Term term = new Term("id", documentId);
         IndexWriter indexWriter = this.createIndex(indexName);
-        indexWriter.addDocument(doc);
+        indexWriter.updateDocument(term, doc);
+        indexWriter.commit();
         indexWriter.close();
 
-        return id;
+        return documentId;
     }
 
-    // update docs
+    private Document createDocument(String documentId, String body) {
+        Map<String, Object> json = GSON.fromJson(body, Map.class);
+        Document doc = new Document();
+        doc.add(TypeHandler.mapField("id", documentId));
+        json.entrySet().forEach(e -> doc.add(TypeHandler.mapField(e.getKey(), e.getValue())));
+        return doc;
+    }
 
     // delete docs
 }

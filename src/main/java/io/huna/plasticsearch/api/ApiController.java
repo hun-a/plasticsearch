@@ -28,7 +28,7 @@ public class ApiController {
 
     @PostMapping(value = "/{name}/{id}")
     public String createDocument(@PathVariable(value = "name") String indexName, @PathVariable("id") String documentId, @RequestBody String body) throws Exception {
-        return indexer.createDocument(indexName, documentId, body);
+        return indexer.generateDocument(indexName, documentId, body);
     }
 
     @GetMapping(value = "/{name}/_search")
@@ -39,5 +39,10 @@ public class ApiController {
     @GetMapping(value = "/{name}/_search/all")
     public SearchResultDto searchAll(@PathVariable(value = "name") String indexName) throws Exception {
         return searcher.searchAll(indexName);
+    }
+
+    @PostMapping(value = "/{name}/_update/{id}")
+    public String updateDocument(@PathVariable(value = "name") String indexName, @PathVariable(value = "id") String documentId, @RequestBody String body) throws Exception {
+        return indexer.generateDocument(indexName, documentId, body);
     }
 }
