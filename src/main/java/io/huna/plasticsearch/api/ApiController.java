@@ -1,8 +1,10 @@
 package io.huna.plasticsearch.api;
 
+import io.huna.plasticsearch.engine.dto.SearchResultDto;
 import io.huna.plasticsearch.engine.index.Indexer;
 import io.huna.plasticsearch.engine.search.Searcher;
 import lombok.RequiredArgsConstructor;
+import org.apache.lucene.document.Document;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,8 +35,8 @@ public class ApiController {
         return indexer.createDocument(indexName, documentId, body);
     }
 
-    @GetMapping(value = "/_search")
-    public String search(@RequestParam(value = "q") String q, @RequestParam(value = "field") String field) {
-        return searcher.search(q, field);
+    @GetMapping(value = "/{name}/_search")
+    public SearchResultDto search(@PathVariable(value = "name") String indexName, @RequestParam(value = "q") String q, @RequestParam(value = "field") String field) throws Exception {
+        return searcher.search(indexName, q, field);
     }
 }

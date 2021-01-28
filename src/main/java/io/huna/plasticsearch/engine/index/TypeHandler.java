@@ -5,7 +5,7 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FloatPoint;
 import org.apache.lucene.document.IntPoint;
 import org.apache.lucene.document.LongPoint;
-import org.apache.lucene.document.StringField;
+import org.apache.lucene.document.TextField;
 
 public class TypeHandler {
 
@@ -22,6 +22,6 @@ public class TypeHandler {
         if (value instanceof Double) {
             return new DoublePoint(key, Double.parseDouble(value.toString()));
         }
-        return new StringField(key, value.toString(), Field.Store.YES);
+        return new Field(key, value.toString(), TextField.TYPE_STORED);
     }
 }
