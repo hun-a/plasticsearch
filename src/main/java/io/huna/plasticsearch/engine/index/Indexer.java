@@ -47,6 +47,7 @@ public class Indexer {
      * @param documentId the document id
      * @param body       the body
      * @return the string
+     * @throws Exception the exception
      */
     public String generateDocument(String indexName, String documentId, String body) throws Exception {
         Document doc = this.createDocument(documentId, body);
@@ -67,5 +68,37 @@ public class Indexer {
         return doc;
     }
 
-    // delete docs
+    /**
+     * Delete document string.
+     *
+     * @param indexName  the index name
+     * @param documentId the document id
+     * @return the string
+     * @throws Exception the exception
+     */
+    public String deleteDocument(String indexName, String documentId) throws Exception {
+        Term term = new Term("id", documentId);
+        IndexWriter indexWriter = this.createIndex(indexName);
+        indexWriter.deleteDocuments(term);
+        indexWriter.commit();
+        indexWriter.close();
+
+        return documentId;
+    }
+
+    /**
+     * Delete all document string.
+     *
+     * @param indexName the index name
+     * @return the string
+     * @throws Exception the exception
+     */
+    public String deleteAllDocument(String indexName) throws Exception {
+        IndexWriter indexWriter = this.createIndex(indexName);
+        indexWriter.deleteAll();
+        indexWriter.commit();
+        indexWriter.close();
+
+        return String.format("All document(s) deleted in the %s", indexName);
+    }
 }
