@@ -77,8 +77,9 @@ public class Searcher {
             }
 
             resultDto.getHits().add(hit);
-            resultDto.setMaxScore(resultDto.getHits().get(0).getScore());
         }
+
+        resultDto.setMaxScore(resultDto.getHits().get(0).getScore());
 
         reader.close();
         directory.close();
