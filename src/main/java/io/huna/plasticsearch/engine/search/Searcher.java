@@ -94,8 +94,8 @@ public class Searcher {
      * @return the search result dto
      * @throws Exception the exception
      */
-    public SearchResultDto searchAll(String indexName) throws Exception {
+    public SearchResultDto searchAll(String indexName, int size) throws Exception {
         Query query = new MatchAllDocsQuery();
-        return executeQuery(indexName, query, 100);
+        return executeQuery(indexName, query, size);
     }
 }

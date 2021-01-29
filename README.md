@@ -39,7 +39,7 @@
   |Endpoint|Query Parameter|Example|
   |--------|---------------|-------|
   |GET /{indexName}/_search|`q`: 검색어<br>`field`: 검색할 필드명<br>`size`: 검색될 문서 갯수|curl -XGET http://localhost:8080/book/_search?q=토비&field=name&size=10|
-  |GET /{indexName}/_search/all| |curl -XGET http://localhost:8080/book/_search/all|
+  |GET /{indexName}/_search/all|`size`: 검색될 문서 갯수|curl -XGET http://localhost:8080/book/_search/all|
 
 # 참고
 - [Lucene 8.7.0 core API](https://lucene.apache.org/core/8_7_0/core/overview-summary.html#overview.description)

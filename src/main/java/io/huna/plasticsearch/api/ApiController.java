@@ -43,8 +43,8 @@ public class ApiController {
     }
 
     @GetMapping(value = "/{name}/_search/all")
-    public SearchResultDto searchAll(@PathVariable(value = "name") String indexName) throws Exception {
-        return searcher.searchAll(indexName);
+    public SearchResultDto searchAll(@PathVariable(value = "name") String indexName, @RequestParam(value = "size", defaultValue = "10") int size) throws Exception {
+        return searcher.searchAll(indexName, size);
     }
 
     @PostMapping(value = "/{name}/_update/{id}")
