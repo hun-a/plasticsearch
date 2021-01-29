@@ -42,19 +42,19 @@ public class Searcher {
      * @return the search result dto
      * @throws Exception the exception
      */
-    public SearchResultDto search(String indexName, String q, String field) throws Exception {
+    public SearchResultDto search(String indexName, String q, String field, int size) throws Exception {
         QueryParser queryParser = new QueryParser(field, analyzer);
         Query query = queryParser.parse(q);
-        return executeQuery(indexName, query);
+        return executeQuery(indexName, query, size);
     }
 
-    private SearchResultDto executeQuery(String indexName, Query query) throws Exception {
+    private SearchResultDto executeQuery(String indexName, Query query, int size) throws Exception {
         log.info("{}", query.toString());
 
         Directory directory = DirectoryUtil.getDirectory(indexName);
         DirectoryReader reader = DirectoryReader.open(directory);
         IndexSearcher indexSearcher = new IndexSearcher(reader);
-        TopDocs topDocs = indexSearcher.search(query, 10);
+        TopDocs topDocs = indexSearcher.search(query, size);
 
         SearchResultDto resultDto = SearchResultDto.builder()
                 .total(topDocs.totalHits.value)
@@ -95,6 +95,6 @@ public class Searcher {
      */
     public SearchResultDto searchAll(String indexName) throws Exception {
         Query query = new MatchAllDocsQuery();
-        return executeQuery(indexName, query);
+        return executeQuery(indexName, query, 100);
     }
 }

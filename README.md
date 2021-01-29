@@ -13,5 +13,4 @@
 - [Tutorials point - Lucene](https://www.tutorialspoint.com/lucene/index.htm)
 
 # TODO
-- `_search` 엔드포인트에서 `size` 값 지정할 수 있도록 구현
 - 엔드포인트 README에 정리
